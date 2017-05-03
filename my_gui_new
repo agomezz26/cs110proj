@@ -1,0 +1,60 @@
+import tkinter
+from tkinter import *
+import Person3
+import json
+
+
+class Questionaire(Tk):
+    def __init__(self):
+        Tk.__init__(self, master)
+        self.row_count=0
+        self.title("Roommate Match")
+        self.wm_iconbitmap("Troll_Face.ico")
+        #master.geometry(("100X100"))
+        Label(master, text="First Name").grid(row=0)
+        Label(master, text="Last Name").grid(row=1)
+        Label(master, text="Age").grid(row=2)
+        self.answer_key = {}
+
+    def createEntry(self,question):
+        Label(self,text=question).grid(self.row_count)
+        e = Entry(self)
+        e.grid(row=self.row_count+1,column=1)
+        self.row_count+=2
+
+    def create_yesno(self, question):
+        var= IntVar()
+        column=1
+        Label(master, text= question).grid(self.row_count)
+        Radiobutton(master, text="yes", variable= var,value=1).grid(self.row_count,column)
+        column+=1
+        Radiobutton(master, text="no", variable= var,value=0).grid(self.row_count,column)
+        self.answer_key[question] = var        
+        self.row_count+=1
+
+    def multipleChoice(self, question, answers):
+        var =IntVar()
+        Label(master, text = question).grid(self.row_count)
+        letter = ord(a)
+        for i in range(len(answers)):
+            Radiobutton(self, text=answers[i], variable= var,value=i).grid(self.row_count,i+1)
+        self.answer_key[question] = var
+        self.row_count+=1
+
+    def createWidgets(self):
+        self.QUIT = Button(self)
+        self.QUIT["text"] = "Quit"
+        self.QUIT["fg"] = "red"
+        self.QUIT["command"] = self.quit
+
+        self.QUIT.pack({"side": "left"})
+
+        self.SUBMIT = Button(self)
+        self.SUBMIT["text"] = "Submit"
+        self.SUBMIT["command"] = self.Person3.match
+
+        self.SUBMIT.pack({"side": "right"})
+
+#root = Tk()
+#app = Questionaire(master=root)
+#app.mainloop()
